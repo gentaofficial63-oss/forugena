@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Eternal Journey ❤️ Sayang</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Font Baru: Dancing Script (Tulisan Tangan) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght=0,400..700;1,400..700&family=Poppins:wght@300;400;500;600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff0f2 0%, #fbc2eb 100%);
+            color: #4a3740;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background 1s ease, filter 1s ease;
+        }
+
+        /* Mode Gelap Total untuk Halaman Kejutan Awal */
+        body.dark-room {
+            background: #080205 !important;
+            filter: brightness(0.2) contrast(1.3);
+        }
+
+        /* Navigasi Atas Premium */
+        .nav-header {
+            width: 100%;
+            padding: 20px 40px;
+            text-align: left;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #881337;
+            background: rgba(255, 240, 242, 0.6);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(136, 19, 55, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .music-control-btn {
+            background: #881337;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(136, 19, 55, 0.2);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .music-control-btn:hover {
+            background: #610c26;
+            transform: translateY(-2px);
+        }
+
+        /* Sistem Halaman / Slide */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 100px 20px 40px 20px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            position: relative;
+            pointer-events: none; 
+        }
+
+        .page.active {
+            display: flex !important;
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            pointer-events: auto !important; 
+            z-index: 50;
+        }
+
+        /* HALAMAN 1: WELCOME SCREEN */
+        #page1 {
+            padding: 0;
+            background: linear-gradient(135deg, #ffb3c1, #fbc2eb);
+        }
+
+        .lock-btn {
+            background-color: white;
+            color: #881337;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(136, 19, 55, 0.25);
+            animation: pulse 1.8s infinite;
+            transition: 0.3s ease;
+            position: relative;
+            z-index: 999999 !important;
+            pointer-events: auto !important;
+        }
+
+        .lock-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* SURAT ELEGANT */
+        .love-letter {
+            max-width: 720px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 45px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 45px rgba(136, 19, 55, 0.08);
+            border: 1px solid rgba(255, 179, 193, 0.5);
+            backdrop-filter: blur(8px);
+            text-align: center;
+        }
+
+        .love-letter h2 {
+            font-family: 'Cinzel', serif;
+            color: #881337;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .love-letter p.sub-heading {
+            color: #a38591;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        /* GAYA SURAT KHUSUS HALAMAN TERAKHIR (TULISAN TANGAN) */
+        .handwriting-letter h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+        }
+
+        .handwriting-letter p.sub-heading {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: #881337;
+        }
+
+        .handwriting-container p {
+            font-family: 'Dancing Script', cursive !important;
+            font-size: 1.7rem !important;
+            line-height: 1.6 !important;
+            color: #4a2031 !important;
+            font-weight: 600;
+        }
+
+        /* ANIMASI KETIK TYPEWRITER DENGAN FONT QUICKSAND */
+        .surat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+        }
+
+        .surat-container p {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #52313e;
+            font-weight: 500;
+        }
+
+        .ketik-js {
+            display: inline;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        .cursor-ketik {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            background-color: #881337;
+            margin-left: 3px;
+            vertical-align: middle;
+            animation: kedip 0.7s infinite;
+        }
+
+        @keyframes kedip {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* HALAMAN 3: MASONRY GRID */
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            color: #881337;
+            margin-bottom: 35px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 160px;
+            gap: 20px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .polaroid-card {
+            background: #ffffff;
+            padding: 12px 12px 18px 12px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(136, 19, 55, 0.08);
+            border: 1px solid rgba(255, 179, 193, 0.2);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .polaroid-card:hover {
+            transform: translateY(-8px) rotate(1deg);
+            box-shadow: 0 15px 35px rgba(136, 19, 55, 0.15);
+        }
+
+        .media-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #fdf2f4;
+        }
+
+        .media-container img, .media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .polaroid-caption {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: #610c26;
+            margin-top: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .col-1-tall { grid-column: span 1; grid-row: span 2; }
+        .col-1-short { grid-column: span 1; grid-row: span 2; } 
+        .col-2-wide { grid-column: span 2; grid-row: span 2; }
+        .col-1-huge { grid-column: span 1; grid-row: span 3; }
+
+        /* TOMBOL NAVIGASI */
+        .btn-romantic {
+            font-family: 'Poppins', sans-serif;
+            background: white;
+            color: #881337;
+            border: 1px solid rgba(136, 19, 55, 0.2);
+            padding: 14px 40px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 0 8px 25px rgba(136, 19, 55, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 200 !important;
+            pointer-events: auto !important;
+        }
+
+        .btn-romantic:hover {
+            transform: scale(1.03);
+            background: #fff0f2;
+            box-shadow: 0 12px 30px rgba(136, 19, 55, 0.15);
+        }
+
+        /* Desain Box Hitung Mundur */
+        .countdown-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #881337;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 40px;
+            border-radius: 30px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(136, 19, 55, 0.3);
+            text-align: center;
+            z-index: 100;
+        }
+
+        /* CONTAINER TEKS KEJUTAN (JATUH DARI ATAS) - TULISAN TANGAN */
+        .giant-love-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            font-weight: 700;
+            color: #be123c;
+            text-shadow: 0 4px 20px rgba(225, 29, 72, 0.4);
+            margin-top: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            min-height: 90px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            z-index: 100;
+            letter-spacing: 2px;
+        }
+
+        /* ANIMASI KATA JATUH DARI ATAS */
+        .word-drop {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(-250px) scale(0.5);
+            animation: dropFromTop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes dropFromTop {
+            0% {
+                opacity: 0;
+                transform: translateY(-250px) scale(0.5) rotate(-10deg);
+            }
+            70% {
+                transform: translateY(15px) scale(1.1) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+        }
+
+        .btn-pdf {
+            background: #881337;
+            color: white;
+            border: none;
+            text-decoration: none;
+            margin-top: 30px;
+            display: inline-block;
+        }
+
+        .btn-pdf:hover {
+            background: #610c26;
+        }
+
+        /* Elemen Buket */
+        .flower-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            margin-top: 15px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .custom-image-wrapper {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 6px solid white;
+            box-shadow: 0 15px 35px rgba(136, 19, 55, 0.2);
+            overflow: hidden;
+            animation: floating 3.5s ease-in-out infinite;
+            position: relative;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .custom-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none; 
+        }
+
+        .flower-glow {
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(255, 179, 193, 0.6) 0%, transparent 70%);
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse-glow 2s infinite alternate;
+            pointer-events: none; 
+        }
+
+        /* HALAMAN 5: VIDEO BOX */
+        .video-wrapper-premium {
+            width: 100%;
+            max-width: 680px;
+            background: white;
+            padding: 16px 16px 24px 16px;
+            border-radius: 28px;
+            box-shadow: 0 25px 50px rgba(136, 19, 55, 0.1);
+            border: 1px solid rgba(255, 179, 193, 0.3);
+        }
+
+        .video-wrapper-premium video {
+            width: 100%;
+            border-radius: 16px;
+            display: block;
+        }
+
+        /* HUJAN EMOJI & LEDAKAN */
+        .rain-item, .flower-burst {
+            position: fixed;
+            pointer-events: none !important;
+            user-select: none;
+            z-index: 99999 !important;
+        }
+
+        .rain-item {
+            top: -50px; 
+            animation: fallRain linear forwards;
+        }
+
+        .flower-burst {
+            font-size: 28px;
+            animation: burstOut 1.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+
+        footer {
+            padding: 20px;
+            color: #a38591;
+            font-size: 0.85rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        @keyframes fallRain {
+            0% {
+                top: -50px;
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                top: 105vh;
+                transform: translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes burstOut {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(0.3) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(1.8) rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop><source src="music.mp3" type="audio/mpeg"></audio>
+    <audio id="music-end" loop><source src="John Mayer - You're Gonna Live Forever in Me Audio.mp3" type="audio/mpeg"></audio>
+
+    <div id="top-nav" class="nav-header" style="display: none;">
+        <span>OUR LOVE STORY ❤️</span>
+        <button class="music-control-btn" id="music-toggle-btn" onclick="toggleMusikManual()">🎵 Putar Musik</button>
+    </div>
+
+    <div id="page1" class="page active">
+        <h2 style="color: white; margin-bottom: 30px; font-size: 2.2rem; font-family: 'Cinzel', serif; text-align: center;">Ada sebuah pesan indah untukmu... 💌</h2>
+        <button class="lock-btn" onclick="bukaKunciMutlak()">Buka Pesan ❤️</button>
+    </div>
+
+    <!-- HALAMAN 2: ANIMASI KETIK SURAT PERTAMA -->
+    <div id="page2" class="page">
+        <div class="love-letter">
+            <h2>Untuk Kamu, Sayang  ✨</h2>
+            <p class="sub-heading">Hari ini, esok, dan selamanya bersamamu.</p>
+            
+            <div class="surat-container">
+                <p><span id="paragraf1" class="ketik-js"></span></p>
+                <p><span id="paragraf2" class="ketik-js"></span></p>
+                <p><span id="paragraf3" class="ketik-js"></span></p>
+                <p style="font-weight: 700; color: #881337; font-size: 1.3rem; margin-top: 10px; font-family: 'Quicksand', sans-serif;"><span id="paragraf4" class="ketik-js"></span></p>
+            </div>
+        </div>
+        <button class="btn-romantic" onclick="pindahHalaman(2, 3)">Lihat Momen Indah Kita 📸</button>
+    </div>
+
+    <div id="page3" class="page">
+        <div class="page-title">Momen Indah Kita 📸</div>
+        <div class="masonry-grid">
+            
+            <div class="polaroid-card col-1-tall">
+                <div class="media-container"><img src="akukamu.jpg" alt="Momen 1"></div>
+                <div class="polaroid-caption">Aku Kamu dan si Ijo</div>
+            </div>
+            
+            <div class="polaroid-card col-1-huge">
+                <div class="media-container"><img src="fotobooth.jpg" alt="Momen 2"></div>
+                <div class="polaroid-caption">Momen Kecil</div>
+            </div>
+            
+            <div class="polaroid-card col-2-wide">
+                <div class="media-container">
+                    <video controls muted loop><source src="senyumansayang.mp4" type="video/mp4"></video>
+                </div>
+                <div class="polaroid-caption">Mam eskrim</div>
+            </div>
+            
+            <div class="polaroid-card col-1-short">
+                <div class="media-container"><img src="ganti.jpg.jpg" alt="Momen 3"></div>
+                <div class="polaroid-caption">Menu spesial 💓</div>
+            </div>
+            
+            <div class="polaroid-card col-2-wide">
+                <div class="media-container">
+                    <video controls muted loop><source src="kita.mp4" type="video/mp4"></video>
+                </div>
+                <div class="polaroid-caption">Waktu Kita</div>
+            </div>
+            
+            <div class="polaroid-card col-1-short">
+                <div class="media-container"><img src="baru.jpg" alt="Momen 4"></div>
+                <div class="polaroid-caption">Couple lucuuw 🫶🏻</div>
+            </div>
+
+        </div>
+        <button class="btn-romantic" onclick="pindahHalaman(3, 4)">Lanjutkan Kejutan 🌹</button>
+    </div>
+
+    <!-- HALAMAN 4: HALAMAN KEJUTAN MERIAH -->
+    <div id="page4" class="page">
+        <h2 style="font-family: 'Cinzel', serif; font-size: 2.3rem; color: #881337; font-weight: 700;">Bunga Dari Meng 🌹</h2>
+        <p style="color: #6e5763; margin-top: 10px; max-width: 500px; text-align: center; font-size: 1.05rem; font-family: 'Quicksand', sans-serif;">
+            Dalam setiap kelopak bunga yang indah, Aku menemukan alasan untuk terus jatuh cinta padamu.
+        </p>
+        
+        <div class="flower-container" id="flower-target">
+            <div class="flower-glow"></div>
+            <div class="custom-image-wrapper">
+                <img src="fotobuket.jpg" alt="Buket Bunga Cantik">
+            </div>
+        </div>
+        
+        <div id="countdown-box" class="countdown-text">Bersiap... Kejutan dalam 5 detik ❤️</div>
+        <div id="love-surprise-text" class="giant-love-text"></div>
+        
+        <button id="next-button-p4" class="btn-romantic" onclick="pindahHalaman(4, 5)">Tonton Video Spesial 🎬</button>
+    </div>
+
+    <div id="page5" class="page">
+        <div class="page-title" style="font-size: 2.4rem;">Video Spesial Kita 🎥</div>
+        <div class="video-wrapper-premium">
+            <video id="main-video" controls><source src="VID-20260822-WA0001.mp4" type="video/mp4"></video>
+            <div style="font-family: 'Playfair Display', serif; margin-top: 15px; font-size: 1.1rem; font-style: italic; color: #881337; text-align: center;">
+                Dibuat dengan segenap rasa cinta ❤️
+            </div>
+        </div>
+        <button class="btn-romantic" onclick="pindahHalaman(5, 6)">Pesan Terakhir ❤️</button>
+    </div>
+
+    <!-- HALAMAN 6: ANIMASI KETIK PESAN TERAKHIR (TULISAN TANGAN & KETIK SLOW) -->
+    <div id="page6" class="page">
+        <div class="love-letter handwriting-letter">
+            <h2>Forever & Always ❤️</h2>
+            <p class="sub-heading">Terima kasih telah menemani setiap langkahku.</p>
+            <div class="surat-container handwriting-container">
+                <p><span id="p6_paragraf1" class="ketik-js"></span></p>
+                <p><span id="p6_paragraf2" class="ketik-js"></span></p>
+                <p style="font-weight: 700; margin-top: 10px; color: #881337; font-size: 2rem !important;"><span id="p6_paragraf3" class="ketik-js"></span></p>
+            </div>
+        </div>
+        
+        <a href="surat untuk gena.pdf" target="_blank" class="btn-romantic btn-pdf">📄 Buka Surat Lengkap Kita (PDF)</a>
+        
+        <footer style="margin-top: 50px;">
+            <p>© All Our Memories — Forever & Always</p>
+        </footer>
+    </div>
+
+    <script>
+        let countdownTimer = null;
+        let heartRainInterval = null;
+        let globalHeartInterval = null;
+        let audioCtx = null;
+
+        // FUNGSI WEB AUDIO API UNTUK MEMBUAT SUARA LEDAKAN / POP
+        function playExplosionSound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const now = audioCtx.currentTime;
+
+                const bufferSize = audioCtx.sampleRate * 0.4;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+
+                const noise = audioCtx.createBufferSource();
+                noise.buffer = buffer;
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(800, now);
+                filter.frequency.exponentialRampToValueAtTime(30, now + 0.35);
+
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(1.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                noise.start(now);
+            } catch (e) {
+                console.log("Audio Context Error: ", e);
+            }
+        }
+
+        // TEKS SURAT HALAMAN 2
+        const teksSurat = [
+            "Terima kasih karena telah hadir dan mengisi setiap ruang kosong di hatiku. Kamu bukan hanya alasan di balik senyumanku, tetapi juga alasan mengapa setiap hariku terasa lebih indah.",
+            "Bersamamu, aku belajar bahwa cinta bukan hanya tentang kebahagiaan, tetapi juga tentang saling menggenggam dalam setiap suka dan duka. Setiap tawa yang kita bagi, setiap cerita yang kita lalui, dan setiap momen sederhana bersamamu adalah hal yang selalu aku syukuri.",
+            "Aku merasa menjadi orang paling beruntung karena memilikimu. Kamu adalah rumah tempat hatiku pulang, ketenangan di tengah segala kekacauan, dan kebahagiaan yang selalu ingin aku jaga.",
+            "Happy 5 monthversarry sayang! ❤️"
+        ];
+
+        // TEKS SURAT HALAMAN 6
+        const teksSuratP6 = [
+            "Terima kasih sudah meluangkan waktu untuk melihat perjalanan kecil-kecilan yang aku buat ini sampai akhir.",
+            "Aku berharap, lembaran demi lembaran hari esok yang akan kita lewati selalu dipenuhi tawa dan kebahagiaan yang sama, menjajaki petualangan baru bersamamu.",
+            "I love you more than words can say."
+        ];
+
+        let sudahDiketikP2 = false;
+        let sudahDiketikP6 = false;
+
+        function jalanKetik(arrayTeks, idPrefix, speed = 30, delayAfterPara = 300, callbackSelesai = null) {
+            function ketikParagraf(idx) {
+                if (idx >= arrayTeks.length) {
+                    if (callbackSelesai) callbackSelesai();
+                    return;
+                }
+
+                const el = document.getElementById(`${idPrefix}${idx + 1}`);
+                if (!el) return;
+                
+                const teks = arrayTeks[idx];
+                let charIndex = 0;
+
+                const cursor = document.createElement('span');
+                cursor.className = 'cursor-ketik';
+                el.after(cursor);
+
+                const timer = setInterval(() => {
+                    if (charIndex < teks.length) {
+                        el.textContent += teks.charAt(charIndex);
+                        charIndex++;
+                    } else {
+                        clearInterval(timer);
+                        cursor.remove();
+                        setTimeout(() => ketikParagraf(idx + 1), delayAfterPara);
+                    }
+                }, speed);
+            }
+
+            ketikParagraf(0);
+        }
+
+        function mulaiKetikSurat() {
+            if (sudahDiketikP2) return;
+            sudahDiketikP2 = true;
+            jalanKetik(teksSurat, 'paragraf', 30, 300);
+        }
+
+        function mulaiKetikSuratP6() {
+            if (sudahDiketikP6) return;
+            sudahDiketikP6 = true;
+            // Kecepatan dinaikkan ke 60ms (lebih lambat & dramatis)
+            jalanKetik(teksSuratP6, 'p6_paragraf', 60, 500);
+        }
+
+        function bukaKunciMutlak() {
+            const current = document.getElementById('page1');
+            const next = document.getElementById('page2');
+            const topNav = document.getElementById('top-nav');
+            const music = document.getElementById('bg-music');
+
+            if (topNav) topNav.style.display = 'flex';
+            globalHeartInterval = setInterval(() => createRainItem('❤️'), 400);
+
+            try {
+                if (music) {
+                    music.play().then(() => {
+                        document.getElementById('music-toggle-btn').innerText = "⏸ Jeda Musik";
+                    }).catch(e => { console.log("Autoplay diblokir."); });
+                }
+            } catch(e) {}
+
+            current.classList.remove('active');
+            next.classList.add('active');
+            
+            mulaiKetikSurat();
+        }
+
+        // LEDAKAN BUNGA MERIAH BESERTA EFEK SUARA
+        function meledakkanBunga() {
+            playExplosionSound();
+
+            const flowerContainer = document.getElementById('flower-target');
+            const rect = flowerContainer.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const emojiBunga = ['🌹', '🌸', '💐', '🌷', '✨', '💖', '🌺', '💕'];
+
+            for (let i = 0; i < 60; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'flower-burst';
+                particle.innerHTML = emojiBunga[Math.floor(Math.random() * emojiBunga.length)];
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 300 + 100;
+                const tx = Math.cos(angle) * distance + 'px';
+                const ty = Math.sin(angle) * distance + 'px';
+
+                particle.style.setProperty('--tx', tx);
+                particle.style.setProperty('--ty', ty);
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1500);
+            }
+        }
+
+        // KATA JATUH SATU PER SATU DARI ATAS
+        function jatuhKataSatupersatu() {
+            const container = document.getElementById('love-surprise-text');
+            container.innerHTML = '';
+
+            const words = ["I", "LOVE", "YOU", "SAYANG", "❤️"];
+            
+            words.forEach((word, idx) => {
+                setTimeout(() => {
+                    const wordSpan = document.createElement('span');
+                    wordSpan.className = 'word-drop';
+                    wordSpan.innerText = word;
+                    container.appendChild(wordSpan);
+
+                    meledakkanBunga();
+                }, idx * 450);
+            });
+        }
+
+        function pindahHalaman(sekarang, tujuan) {
+            const current = document.getElementById('page' + sekarang);
+            const next = document.getElementById('page' + tujuan);
+            const music = document.getElementById('bg-music');
+            const musicEnd = document.getElementById('music-end');
+            const mainVideo = document.getElementById('main-video');
+
+            if (current && next) {
+                current.classList.remove('active');
+                next.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+
+            if (tujuan === 2) {
+                mulaiKetikSurat();
+            }
+
+            if (tujuan === 4) {
+                let timeLeft = 5;
+                const countdownBox = document.getElementById('countdown-box');
+                const surpriseText = document.getElementById('love-surprise-text');
+                
+                document.body.classList.add('dark-room');
+
+                countdownBox.style.display = 'block';
+                countdownBox.innerText = `Bersiap... Kejutan dalam ${timeLeft} detik ❤️`;
+                surpriseText.innerHTML = '';
+
+                if (countdownTimer) clearInterval(countdownTimer);
+                if (heartRainInterval) clearInterval(heartRainInterval);
+
+                countdownTimer = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft > 0) {
+                        countdownBox.innerText = `Bersiap... Kejutan dalam ${timeLeft} detik ❤️`;
+                    } else {
+                        clearInterval(countdownTimer);
+                        countdownBox.style.display = 'none';
+
+                        document.body.classList.remove('dark-room');
+
+                        meledakkanBunga();
+
+                        jatuhKataSatupersatu();
+
+                        const emojisRain = ['❤️', '💖', '🌹', '🌸', '✨', '💕', '🌷'];
+                        heartRainInterval = setInterval(() => {
+                            const randomEmoji = emojisRain[Math.floor(Math.random() * emojisRain.length)];
+                            createRainItem(randomEmoji);
+                        }, 100);
+                    }
+                }, 1000);
+            } else if (sekarang === 4) {
+                document.body.classList.remove('dark-room');
+                if (countdownTimer) clearInterval(countdownTimer);
+                if (heartRainInterval) clearInterval(heartRainInterval);
+            }
+
+            if (tujuan === 5) {
+                if (music) music.pause();
+                if (mainVideo) {
+                    mainVideo.currentTime = 0;
+                    mainVideo.play().catch(e => console.log("Video diblokir"));
+                }
+            } else if (sekarang === 5) {
+                if (mainVideo) mainVideo.pause();
+                if (music && tujuan !== 6) music.play().catch(e => {});
+            }
+
+            if (tujuan === 6) {
+                mulaiKetikSuratP6();
+                if (music) music.pause();
+                if (musicEnd) {
+                    musicEnd.play().then(() => {
+                        document.getElementById('music-toggle-btn').innerText = "⏸ Jeda Musik Akhir";
+                    }).catch(e => {});
+                }
+            } else if (sekarang === 6) {
+                if (musicEnd) musicEnd.pause();
+            }
+        }
+
+        function toggleMusikManual() {
+            const music = document.getElementById('bg-music');
+            const musicEnd = document.getElementById('music-end');
+            const p6 = document.getElementById('page6');
+
+            if (p6 && p6.classList.contains('active')) {
+                if (musicEnd.paused) {
+                    musicEnd.play();
+                    document.getElementById('music-toggle-btn').innerText = "⏸ Jeda Musik Akhir";
+                } else {
+                    musicEnd.pause();
+                    document.getElementById('music-toggle-btn').innerText = "🎵 Putar Musik Akhir";
+                }
+            } else {
+                if (music.paused) {
+                    music.play();
+                    document.getElementById('music-toggle-btn').innerText = "⏸ Jeda Musik";
+                } else {
+                    music.pause();
+                    document.getElementById('music-toggle-btn').innerText = "🎵 Putar Musik";
+                }
+            }
+        }
+
+        function createRainItem(symbol = '❤️') {
+            const item = document.createElement('div');
+            item.classList.add('rain-item');
+            item.innerHTML = symbol;
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = Math.random() * 2 + 2.5 + 's';
+            item.style.fontSize = Math.random() * 18 + 16 + 'px';
+            document.body.appendChild(item);
+            setTimeout(() => { item.remove(); }, 4500);
+        }
+    </script>
+</body>
+</html>
